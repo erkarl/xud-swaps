@@ -1,10 +1,17 @@
 # Cross Chain Atomic Swaps Via Lightning Network Payment Channels
 In this guide we're going to do cross chain atomic swaps using Lightning Network payment channels using [Exchange Union Deamon](https://github.com/ExchangeUnion/xud). At the end of this guide we'll swap 1 satoshi for 120 litoshis without having to trust the other party. You can read more about the technical process [here](https://github.com/ExchangeUnion/Lightning-Swap-PoC-v2/blob/master/Concept.md).
 
+It is a continuation to the [Lightning BTC/LTC Swap Guide (v2)](https://github.com/ExchangeUnion/Lightning-Swap-PoC-v2). The main difference is that this version uses xud for managing swaps instead of proof of concept [swap-resolver](https://github.com/ExchangeUnion/swap-resolver). We're also using simnet instead of testnet to speed up the process.
+
 This guide assumes a fresh/clean [Ubuntu Server 18.04.1 LTS](https://www.ubuntu.com/download/server) environment.
 
 ## Overview
-TODO: Briefly explain how the setup works etc.
+In order to execute swaps we'll need:
+* bitcoin full node to verify on chain transactions
+* litecoin full node to verify on chain transactions
+* payment channel implementation for the respective chains (lightning network deamon in our case)
+* xud to manage Exchange A's orders and payment channels
+* xud to manage Exchange B's orders and payment channels
 
 ## Dependencies
 
