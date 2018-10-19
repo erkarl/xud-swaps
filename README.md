@@ -14,192 +14,26 @@ In order to execute swaps we'll need:
 * xud to manage Exchange B's orders and payment channels
 
 ## Dependencies
-
-### Go 1.11.1
-
-1. Download and extract the binary
+Run install script
 ```
-wget https://dl.google.com/go/go1.11.1.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.11.1.linux-amd64.tar.gz
+wget -qO- https://raw.githubusercontent.com/erkarl/xud-swaps/master/install.sh | bash && source ~/.bashrc
 ```
 
-2. Add Go to PATH
-```
-echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
-echo 'export GOPATH=$(go env GOPATH)' >> ~/.bashrc
-echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.bashrc
-source ~/.bashrc
-```
+The script will install the following dependencies:
+* [go1.11.1 + glide](https://golang.org/dl/)
+* [node.js via nvm](https://github.com/creationix/nvm)
+* [python](https://packages.ubuntu.com/bionic/python) (required to build xud)
+* [g++](https://packages.ubuntu.com/bionic/g++) (required to build xud)
+* [make](https://packages.ubuntu.com/bionic/make) (required to build lnd)
+* [btcd](https://github.com/btcsuite/btcd)
+* [ltcd](https://github.com/ltcsuite/ltcd/)
+* [lnd resolver+simnet-ltcd](https://github.com/ExchangeUnion/lnd/tree/resolver+simnet-ltcd)
+* [xud v1.0.0-alpha.1](https://github.com/ExchangeUnion/xud/tree/v1.0.0-alpha.1)
 
-3. Verify Go installation
-```
-$ go version
-go version go1.11.1 linux/amd64
-```
-
-4. Install glide package manager
-```
-go get -u github.com/Masterminds/glide
-```
-
-5. Verify glide installation
-```
-$ glide --version
-glide version 0.13.2-dev
-```
-
-### Node.js 8.12.0
-
-1. Install node version manager (nvm)
-```
-wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-source ~/.bashrc
-```
-
-2. Verify nvm installation
-```
-$ nvm --version
-0.33.11
-```
-
-3. Install Node.js 8.12.0
-```
-nvm install v8.12.0
-```
-
-4. Verify Node.js installation
-```
-$ node -v
-v8.12.0
-```
-
-### Python
-Required to build dependencies for xud.
-
-1. Install Python
-```
-sudo apt install python
-```
-
-2. Verify installation
-```
-$ python --version
-Python 2.7.15rc1
-```
-
-### g++
-Required to build dependencies for xud.
-
-1. Install g++
-```
-sudo apt install g++
-```
-
-2. Verify installation
-```
-$ g++ --version
-g++ (Ubuntu 7.3.0-27ubuntu1~18.04) 7.3.0
-Copyright (C) 2017 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-```
-
-### make
-Required to build dependencies for lnd.
-
-1. Install make
-```
-sudo apt install make
-```
-
-2. Verify installation
-```
-$ make --version
-GNU Make 4.1
-Built for x86_64-pc-linux-gnu
-Copyright (C) 1988-2014 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-```
-
-### btcd
-
-1. Install btcd
-```
-git clone https://github.com/btcsuite/btcd $GOPATH/src/github.com/btcsuite/btcd
-cd $GOPATH/src/github.com/btcsuite/btcd
-glide install
-go install . ./cmd/...
-```
-
-2. Verify installation
-```
-$ btcd --version
-btcd version 0.12.0-beta
-```
-
-### ltcd
-
-1. Install ltcd
-```
-git clone https://github.com/ltcsuite/ltcd $GOPATH/src/github.com/ltcsuite/ltcd
-cd $GOPATH/src/github.com/ltcsuite/ltcd
-glide install
-go install . ./cmd/...
-```
-
-2. Verify installation
-```
-$ ltcd --version
-ltcd version 0.12.0-beta
-```
-
-### lnd
-We're going to use a slightly modified version of lnd that supports cross chain swaps.
-
-1. Install lnd
-```
-git clone -b resolver https://github.com/ExchangeUnion/lnd.git $GOPATH/src/github.com/lightningnetwork/lnd
-cd $GOPATH/src/github.com/lightningnetwork/lnd
-git checkout ac8689c634d1fa6eb4c694e11ea0472bfe81e8ea
-make && make install
-```
-
-2. Verify installation
-```
-$ lnd --version
-lnd version 0.5.0-beta commit=ac8689c634d1fa6eb4c694e11ea0472bfe81e8ea
-```
-
-### xud
-1. Install xud
-```
-git clone https://github.com/ExchangeUnion/xud.git ~/swaps/xud
-cd ~/swaps/xud
-git checkout v1.0.0-alpha.1
-npm i
-npm run compile
-```
-
-2. Create aliases for `xud` and `xucli` binaries
-```
-echo 'alias xud="~/swaps/xud/bin/xud"' >> ~/.bashrc
-echo 'alias xucli="~/swaps/xud/bin/xucli"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-2. Verify installation
-```
-$ xud --version
-1.0.0-alpha.1
-$ xucli --version
-1.0.0-alpha.1
-```
-
-Now that we have our dependencies installed we can get to work on configuring the environment.
+Depending on your environment resources it could take several minutes.
 
 ## Configuration
+Now that we have our dependencies installed we can get to work on configuring the environment.
 
 ### ltcd testnet
 ltcd does not currently support simnet so we'll have to sync it against testnet which will take a while.
