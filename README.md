@@ -30,7 +30,7 @@ The script will install the following dependencies:
 * [lnd resolver+simnet-ltcd](https://github.com/ExchangeUnion/lnd/tree/resolver+simnet-ltcd)
 * [xud v1.0.0-alpha.1](https://github.com/ExchangeUnion/xud/tree/v1.0.0-alpha.1)
 
-Depending on your environment resources it could take several minutes.
+For convenience, it will also setup `~/swaps` directory that contains the configuration files for Exchange A and Exchange B. Depending on your environment resources it could take several minutes.
 
 ## Configuration
 Now that we have our dependencies installed we can get to work on configuring the environment.
