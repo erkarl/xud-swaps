@@ -1,7 +1,8 @@
 #!/bin/bash
+XUD_INSTALL_DIR=~/xud
 shopt -s expand_aliases
-mkdir -p ~/swaps
-cd ~/swaps || exit
+mkdir -p $XUD_INSTALL_DIR
+cd $XUD_INSTALL_DIR || exit
 echo "Installing go..."
 wget https://dl.google.com/go/go1.11.1.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.11.1.linux-amd64.tar.gz
@@ -52,13 +53,13 @@ git checkout 06642fa8a9803b8e122b8f12a350315fe16a4151
 make && make install
 lnd --version
 echo "Installing xud"
-git clone https://github.com/ExchangeUnion/xud.git ~/swaps/xud
-cd ~/swaps/xud || exit
+git clone https://github.com/ExchangeUnion/xud.git $XUD_INSTALL_DIR
+cd $XUD_INSTALL_DIR || exit
 git checkout v1.0.0-alpha.1
 npm i
 npm run compile
-alias xud="~/swaps/xud/bin/xud"
-echo 'alias xud="~/swaps/xud/bin/xud"' >> ~/.bashrc
-echo 'alias xucli="~/swaps/xud/bin/xucli"' >> ~/.bashrc
+alias xud='$XUD_INSTALL_DIR/bin/xud'
+echo "alias xud=\"$XUD_INSTALL_DIR/bin/xud\"" >> ~/.bashrc
+echo "alias xucli=\"$XUD_INSTALL_DIR/bin/xucli\"" >> ~/.bashrc
 xud --version
 echo "All dependencies successfully installed."
